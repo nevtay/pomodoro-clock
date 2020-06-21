@@ -3,11 +3,12 @@ import "./App.css";
 
 // components
 import TimerDisplay from "./components/Display/TimerDisplay";
+import Navbar from "./components/Navbar/Navbar";
 
 function App() {
   return (
     <div>
-      <h1>Pomodoro Timer</h1>
+      <Navbar />
       <TimerDisplay />
     </div>
   );
