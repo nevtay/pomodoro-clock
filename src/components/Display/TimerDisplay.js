@@ -2,6 +2,9 @@ import React from "react";
 import ButtonTemplate from "../Buttons/ButtonTemplate";
 
 export default function TimerDisplay() {
+  const ONE_SECOND_IN_MILLISECONDS = 1000;
+  const ONE_MINUTE_IN_MILLISECONDS = 60000;
+  const TWENTY_FIVE_MINUTES_IN_MILLISECONDS = ONE_MINUTE_IN_MILLISECONDS * 25;
   return (
     <div>
       <div>
