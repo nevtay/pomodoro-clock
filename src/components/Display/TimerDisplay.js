@@ -1,22 +1,18 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import ButtonTemplate from "../Buttons/ButtonTemplate";
 
 export default function TimerDisplay() {
+  const [minutesLeft, setMinutesLeft] = useState("00");
+  const [secondsLeft, setSecondsLeft] = useState("00");
   const ONE_SECOND_IN_MILLISECONDS = 1000;
   const ONE_MINUTE_IN_MILLISECONDS = ONE_SECOND_IN_MILLISECONDS * 60;
-  let minuteDisplay =
-    (ONE_MINUTE_IN_MILLISECONDS * 25) / ONE_MINUTE_IN_MILLISECONDS;
-  const secondDisplay = () => {
-    let seconds =
-      (ONE_MINUTE_IN_MILLISECONDS * 25) % ONE_MINUTE_IN_MILLISECONDS;
-    let isBelowTenSeconds = seconds < 10;
-    return isBelowTenSeconds ? "0" + String(seconds) : seconds;
-  };
+  const TWENTY_FIVE_MINUTES_IN_MILLISECONDS = ONE_MINUTE_IN_MILLISECONDS * 25;
+
   return (
     <div>
       <div>
         <h1>
-          {minuteDisplay}:{secondDisplay()}
+          {minutesLeft}:{secondsLeft}
         </h1>
       </div>
       <div>
