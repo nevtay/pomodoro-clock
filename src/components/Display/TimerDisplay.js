@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState } from "react";
 import ButtonTemplate from "../Buttons/ButtonTemplate";
 
 export default function TimerDisplay() {
