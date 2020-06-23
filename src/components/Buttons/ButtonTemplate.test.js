@@ -5,6 +5,6 @@ import ButtonTemplate from "./ButtonTemplate";
 test("Button Text should accept a prop", () => {
   const testText = "test";
   const { getByText } = render(<ButtonTemplate text={testText} />);
-  const buttonText = getByText(/TEST/i);
+  const buttonText = getByText(testText);
   expect(buttonText.innerHTML).toEqual(testText);
 });
