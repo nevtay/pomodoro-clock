@@ -4,25 +4,25 @@ import ButtonTemplate from "../Buttons/ButtonTemplate";
 export default function TimerDisplay() {
   const ONE_SECOND_IN_MILLISECONDS = 1000;
   const ONE_MINUTE_IN_MILLISECONDS = ONE_SECOND_IN_MILLISECONDS * 60;
-  let DEFAULT_REMAINING_TIME = 0;
+  let DEFAULT_REMAINING_TIME_IN_MINUTES = 25;
   const [timerIsRunning, setTimerIsRunning] = useState(false);
   let [minutesLeft, setMinutesLeft] = useState(
-    Math.floor(DEFAULT_REMAINING_TIME / ONE_MINUTE_IN_MILLISECONDS)
+    Math.floor(DEFAULT_REMAINING_TIME_IN_MINUTES / ONE_MINUTE_IN_MILLISECONDS)
   );
   let [secondsLeft, setSecondsLeft] = useState(
-    DEFAULT_REMAINING_TIME % ONE_MINUTE_IN_MILLISECONDS
+    DEFAULT_REMAINING_TIME_IN_MINUTES % ONE_MINUTE_IN_MILLISECONDS
   );
 
   const handleStartTime = () => {
-    if (DEFAULT_REMAINING_TIME <= 0) {
+    if (DEFAULT_REMAINING_TIME_IN_MINUTES <= 0) {
       return;
     } else {
-      DEFAULT_REMAINING_TIME -= 1000;
+      DEFAULT_REMAINING_TIME_IN_MINUTES -= 1000;
       const updateMinuteValue = Math.floor(
-        DEFAULT_REMAINING_TIME / ONE_MINUTE_IN_MILLISECONDS
+        DEFAULT_REMAINING_TIME_IN_MINUTES / ONE_MINUTE_IN_MILLISECONDS
       );
       const updatedSecondValue =
-        (DEFAULT_REMAINING_TIME % ONE_MINUTE_IN_MILLISECONDS) / 1000;
+        (DEFAULT_REMAINING_TIME_IN_MINUTES % ONE_MINUTE_IN_MILLISECONDS) / 1000;
       setMinutesLeft(updateMinuteValue);
       setSecondsLeft(updatedSecondValue);
     }
