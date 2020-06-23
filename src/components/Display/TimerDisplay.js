@@ -4,11 +4,20 @@ import ButtonTemplate from "../Buttons/ButtonTemplate";
 export default function TimerDisplay() {
   const ONE_SECOND_IN_MILLISECONDS = 1000;
   const ONE_MINUTE_IN_MILLISECONDS = ONE_SECOND_IN_MILLISECONDS * 60;
-  const TWENTY_FIVE_MINUTES_IN_MILLISECONDS = ONE_MINUTE_IN_MILLISECONDS * 25;
+  let minuteDisplay =
+    (ONE_MINUTE_IN_MILLISECONDS * 25) / ONE_MINUTE_IN_MILLISECONDS;
+  const secondDisplay = () => {
+    let seconds =
+      (ONE_MINUTE_IN_MILLISECONDS * 25) % ONE_MINUTE_IN_MILLISECONDS;
+    let isBelowTenSeconds = seconds < 10;
+    return isBelowTenSeconds ? "0" + String(seconds) : seconds;
+  };
   return (
     <div>
       <div>
-        <h1>25:00</h1>
+        <h1>
+          {minuteDisplay}:{secondDisplay()}
+        </h1>
       </div>
       <div>
         <ButtonTemplate text="Start" />
