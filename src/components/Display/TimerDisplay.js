@@ -1,22 +1,51 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import ButtonTemplate from "../Buttons/ButtonTemplate";
 
 export default function TimerDisplay() {
-  const [minutesLeft, setMinutesLeft] = useState("00");
-  const [secondsLeft, setSecondsLeft] = useState("00");
   const ONE_SECOND_IN_MILLISECONDS = 1000;
   const ONE_MINUTE_IN_MILLISECONDS = ONE_SECOND_IN_MILLISECONDS * 60;
-  const TWENTY_FIVE_MINUTES_IN_MILLISECONDS = ONE_MINUTE_IN_MILLISECONDS * 25;
+  let DEFAULT_REMAINING_TIME = 0;
+  const [timerIsRunning, setTimerIsRunning] = useState(false);
+  let [minutesLeft, setMinutesLeft] = useState(
+    Math.floor(DEFAULT_REMAINING_TIME / ONE_MINUTE_IN_MILLISECONDS)
+  );
+  let [secondsLeft, setSecondsLeft] = useState(
+    DEFAULT_REMAINING_TIME % ONE_MINUTE_IN_MILLISECONDS
+  );
+
+  const handleStartTime = () => {
+    if (DEFAULT_REMAINING_TIME <= 0) {
+      return;
+    } else {
+      DEFAULT_REMAINING_TIME -= 1000;
+      const updateMinuteValue = Math.floor(
+        DEFAULT_REMAINING_TIME / ONE_MINUTE_IN_MILLISECONDS
+      );
+      const updatedSecondValue =
+        (DEFAULT_REMAINING_TIME % ONE_MINUTE_IN_MILLISECONDS) / 1000;
+      setMinutesLeft(updateMinuteValue);
+      setSecondsLeft(updatedSecondValue);
+    }
+  };
+
+  const startTimer = () => {
+    if (timerIsRunning) {
+      return;
+    } else {
+      setTimerIsRunning(true);
+      setInterval(handleStartTime, 1000);
+    }
+  };
 
   return (
     <div>
       <div>
         <h1>
-          {minutesLeft}:{secondsLeft}
+          {minutesLeft}:{secondsLeft < 10 ? `0${secondsLeft}` : secondsLeft}
         </h1>
       </div>
       <div>
-        <ButtonTemplate text="Start" />
+        <ButtonTemplate text="Start" onClick={startTimer} />
       </div>
       <div>
         <ButtonTemplate text="Pause" />
