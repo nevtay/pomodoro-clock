@@ -6,7 +6,7 @@ export default function TimerDisplay() {
   const ONE_MINUTE_IN_MILLISECONDS = ONE_SECOND_IN_MILLISECONDS * 60;
   const TWENTY_FIVE_MINUTES = ONE_MINUTE_IN_MILLISECONDS * 25;
   let [remainingTime, setRemainingTime] = useState(TWENTY_FIVE_MINUTES);
-  let [intervalIsRunning, setIntervalIsRunning] = useState();
+  let [intervalId, setIntervalId] = useState();
   let [timerIsRunning, setTimerIsRunning] = useState(false);
   let [minutesLeft, setMinutesLeft] = useState(
     Math.floor(remainingTime / ONE_MINUTE_IN_MILLISECONDS)
@@ -35,17 +35,17 @@ export default function TimerDisplay() {
       return;
     }
     setTimerIsRunning(true);
-    setIntervalIsRunning(setInterval(handleStartTime, 1000));
+    setIntervalId(setInterval(handleStartTime, 1000));
   };
 
   const pauseTimer = () => {
     setTimerIsRunning(false);
-    setIntervalIsRunning(clearInterval(intervalIsRunning));
+    setIntervalId(clearInterval(intervalId));
   };
 
   const resetTimer = () => {
     setTimerIsRunning(false);
-    setIntervalIsRunning(clearInterval(intervalIsRunning));
+    setIntervalId(clearInterval(intervalId));
     remainingTime = TWENTY_FIVE_MINUTES;
     setRemainingTime(TWENTY_FIVE_MINUTES);
     let updatedMinuteValue = Math.floor(
