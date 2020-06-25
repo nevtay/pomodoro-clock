@@ -8,7 +8,7 @@ test("TimerDisplay shows 25:00 by default", () => {
   expect(defaultStartTime).toBeInTheDocument();
 });
 
-test("TimerDisplay has at least buttons", () => {
+test("TimerDisplay has three buttons", () => {
   const { getAllByLabelText } = render(<TimerDisplay />);
   const buttons = getAllByLabelText(/button/i);
   expect(buttons.length).toEqual(3);
