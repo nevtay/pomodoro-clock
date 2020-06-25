@@ -19,8 +19,7 @@ export default function TimerDisplay() {
     if (remainingTime <= 0) {
       return;
     } else {
-      remainingTime -= 1000;
-      setRemainingTime(remainingTime);
+      setRemainingTime((remainingTime -= 1000));
       let updateMinuteValue = Math.floor(
         remainingTime / ONE_MINUTE_IN_MILLISECONDS
       );
