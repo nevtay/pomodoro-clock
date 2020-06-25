@@ -20,12 +20,12 @@ export default function TimerDisplay() {
       return;
     } else {
       setRemainingTime((remainingTime -= 1000));
-      let updateMinuteValue = Math.floor(
+      let updatedMinuteValue = Math.floor(
         remainingTime / ONE_MINUTE_IN_MILLISECONDS
       );
       let updatedSecondValue =
         (remainingTime % ONE_MINUTE_IN_MILLISECONDS) / 1000;
-      setMinutesLeft(updateMinuteValue);
+      setMinutesLeft(updatedMinuteValue);
       setSecondsLeft(updatedSecondValue);
     }
   };
