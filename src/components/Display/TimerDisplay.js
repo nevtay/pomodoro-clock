@@ -4,6 +4,7 @@ import ButtonTemplate from "../Buttons/ButtonTemplate";
 export default function TimerDisplay() {
   const ONE_SECOND_IN_MILLISECONDS = 1000;
   const ONE_MINUTE_IN_MILLISECONDS = ONE_SECOND_IN_MILLISECONDS * 60;
+  const TWENTY_FIVE_MINUTES = ONE_MINUTE_IN_MILLISECONDS * 25;
   let [remainingTime, setRemainingTime] = useState(
     ONE_MINUTE_IN_MILLISECONDS * 25
   );
