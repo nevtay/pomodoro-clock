@@ -4,25 +4,29 @@ import ButtonTemplate from "../Buttons/ButtonTemplate";
 export default function TimerDisplay() {
   const ONE_SECOND_IN_MILLISECONDS = 1000;
   const ONE_MINUTE_IN_MILLISECONDS = ONE_SECOND_IN_MILLISECONDS * 60;
-  let DEFAULT_REMAINING_TIME_IN_MINUTES = ONE_MINUTE_IN_MILLISECONDS * 25;
-  const [timerIsRunning, setTimerIsRunning] = useState(false);
+  let [remainingTime, setRemainingTime] = useState(
+    ONE_MINUTE_IN_MILLISECONDS * 25
+  );
+  let [intervalIsRunning, setIntervalIsRunning] = useState();
+  let [timerIsRunning, setTimerIsRunning] = useState(false);
   let [minutesLeft, setMinutesLeft] = useState(
-    Math.floor(DEFAULT_REMAINING_TIME_IN_MINUTES / ONE_MINUTE_IN_MILLISECONDS)
+    Math.floor(remainingTime / ONE_MINUTE_IN_MILLISECONDS)
   );
   let [secondsLeft, setSecondsLeft] = useState(
-    DEFAULT_REMAINING_TIME_IN_MINUTES % ONE_MINUTE_IN_MILLISECONDS
+    remainingTime % ONE_MINUTE_IN_MILLISECONDS
   );
 
   const handleStartTime = () => {
-    if (DEFAULT_REMAINING_TIME_IN_MINUTES <= 0) {
+    if (remainingTime <= 0) {
       return;
     } else {
-      DEFAULT_REMAINING_TIME_IN_MINUTES -= 1000;
-      const updateMinuteValue = Math.floor(
-        DEFAULT_REMAINING_TIME_IN_MINUTES / ONE_MINUTE_IN_MILLISECONDS
+      remainingTime -= 1000;
+      setRemainingTime(remainingTime);
+      let updateMinuteValue = Math.floor(
+        remainingTime / ONE_MINUTE_IN_MILLISECONDS
       );
-      const updatedSecondValue =
-        (DEFAULT_REMAINING_TIME_IN_MINUTES % ONE_MINUTE_IN_MILLISECONDS) / 1000;
+      let updatedSecondValue =
+        (remainingTime % ONE_MINUTE_IN_MILLISECONDS) / 1000;
       setMinutesLeft(updateMinuteValue);
       setSecondsLeft(updatedSecondValue);
     }
@@ -33,8 +37,13 @@ export default function TimerDisplay() {
       return;
     } else {
       setTimerIsRunning(true);
-      setInterval(handleStartTime, 1000);
+      setIntervalIsRunning(setInterval(handleStartTime, 1000));
     }
+  };
+
+  const pauseTimer = () => {
+    setTimerIsRunning(false);
+    setIntervalIsRunning(clearInterval(intervalIsRunning));
   };
 
   return (
@@ -48,7 +57,7 @@ export default function TimerDisplay() {
         <ButtonTemplate text="Start" onClick={startTimer} />
       </div>
       <div>
-        <ButtonTemplate text="Pause" />
+        <ButtonTemplate text="Pause" onClick={pauseTimer} />
       </div>
       <div>
         <ButtonTemplate text="Reset" />
