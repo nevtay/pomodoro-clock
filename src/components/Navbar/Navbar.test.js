@@ -2,8 +2,9 @@ import React from "react";
 import { render } from "@testing-library/react";
 import Navbar from "./Navbar";
 
-test("TimerDisplay shows 25:00 by default", () => {
+test("Navbar contains title of project", () => {
+  const projectTitle = "Pomodoro TImer";
   const { getByText } = render(<Navbar />);
-  const projectTitle = getByText(/Pomodoro TImer/i);
-  expect(projectTitle).toBeInTheDocument();
+  const findProjectTitle = getByText(projectTitle);
+  expect(findProjectTitle).toBeInTheDocument();
 });
