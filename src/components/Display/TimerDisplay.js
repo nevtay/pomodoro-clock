@@ -44,6 +44,19 @@ export default function TimerDisplay() {
     setIntervalIsRunning(clearInterval(intervalIsRunning));
   };
 
+  const resetTimer = () => {
+    setIntervalIsRunning(clearInterval(intervalIsRunning));
+    remainingTime = TWENTY_FIVE_MINUTES;
+    setRemainingTime(remainingTime);
+    let updatedMinuteValue = Math.floor(
+      remainingTime / ONE_MINUTE_IN_MILLISECONDS
+    );
+    let updatedSecondValue =
+      (remainingTime % ONE_MINUTE_IN_MILLISECONDS) / 1000;
+    setMinutesLeft(updatedMinuteValue);
+    setSecondsLeft(updatedSecondValue);
+  };
+
   return (
     <div>
       <div>
@@ -58,7 +71,7 @@ export default function TimerDisplay() {
         <ButtonTemplate text="Pause" onClick={pauseTimer} />
       </div>
       <div>
-        <ButtonTemplate text="Reset" />
+        <ButtonTemplate text="Reset" onClick={resetTimer} />
       </div>
     </div>
   );
