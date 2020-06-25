@@ -33,10 +33,9 @@ export default function TimerDisplay() {
   const startTimer = () => {
     if (timerIsRunning) {
       return;
-    } else {
-      setTimerIsRunning(true);
-      setIntervalIsRunning(setInterval(handleStartTime, 1000));
     }
+    setTimerIsRunning(true);
+    setIntervalIsRunning(setInterval(handleStartTime, 1000));
   };
 
   const pauseTimer = () => {
@@ -45,9 +44,10 @@ export default function TimerDisplay() {
   };
 
   const resetTimer = () => {
+    setTimerIsRunning(false);
     setIntervalIsRunning(clearInterval(intervalIsRunning));
     remainingTime = TWENTY_FIVE_MINUTES;
-    setRemainingTime(remainingTime);
+    setRemainingTime(TWENTY_FIVE_MINUTES);
     let updatedMinuteValue = Math.floor(
       remainingTime / ONE_MINUTE_IN_MILLISECONDS
     );
