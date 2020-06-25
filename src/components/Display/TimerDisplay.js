@@ -5,9 +5,7 @@ export default function TimerDisplay() {
   const ONE_SECOND_IN_MILLISECONDS = 1000;
   const ONE_MINUTE_IN_MILLISECONDS = ONE_SECOND_IN_MILLISECONDS * 60;
   const TWENTY_FIVE_MINUTES = ONE_MINUTE_IN_MILLISECONDS * 25;
-  let [remainingTime, setRemainingTime] = useState(
-    ONE_MINUTE_IN_MILLISECONDS * 25
-  );
+  let [remainingTime, setRemainingTime] = useState(TWENTY_FIVE_MINUTES);
   let [intervalIsRunning, setIntervalIsRunning] = useState();
   let [timerIsRunning, setTimerIsRunning] = useState(false);
   let [minutesLeft, setMinutesLeft] = useState(
