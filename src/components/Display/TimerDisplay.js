@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import ButtonTemplate from "../Buttons/ButtonTemplate";
 
 export default function TimerDisplay() {
   const ONE_SECOND_IN_MILLISECONDS = 1000;
   const ONE_MINUTE_IN_MILLISECONDS = ONE_SECOND_IN_MILLISECONDS * 60;
   const TWENTY_FIVE_MINUTES = ONE_MINUTE_IN_MILLISECONDS * 25;
+  const timeLeft = useRef(null);
+  const intervalId = useRef();
   let [remainingTime, setRemainingTime] = useState(TWENTY_FIVE_MINUTES);
-  let [intervalId, setIntervalId] = useState();
-  let [timerIsRunning, setTimerIsRunning] = useState(false);
+  let [timerIsRunning, setTimerIsRunning] = useState(null);
   let [minutesLeft, setMinutesLeft] = useState(
     Math.floor(remainingTime / ONE_MINUTE_IN_MILLISECONDS)
   );
@@ -15,44 +16,47 @@ export default function TimerDisplay() {
     remainingTime % ONE_MINUTE_IN_MILLISECONDS
   );
 
-  const handleStartTime = () => {
-    if (remainingTime <= 0) {
+  const startTimer = () => {
+    if (timerIsRunning) {
       return;
     } else {
-      setRemainingTime((remainingTime -= 1000));
+      setTimerIsRunning(true);
+      timeLeft.current = remainingTime;
+      const timerId = setInterval(handleStartTime, 1000);
+      intervalId.current = timerId;
+    }
+  };
+
+  const handleStartTime = () => {
+    if (timeLeft.current <= 0) {
+      clearInterval(intervalId.current);
+    } else {
+      setRemainingTime((timeLeft.current -= 1000));
       let updatedMinuteValue = Math.floor(
-        remainingTime / ONE_MINUTE_IN_MILLISECONDS
+        timeLeft.current / ONE_MINUTE_IN_MILLISECONDS
       );
       let updatedSecondValue =
-        (remainingTime % ONE_MINUTE_IN_MILLISECONDS) / 1000;
+        (timeLeft.current % ONE_MINUTE_IN_MILLISECONDS) / 1000;
       setMinutesLeft(updatedMinuteValue);
       setSecondsLeft(updatedSecondValue);
     }
   };
 
-  const startTimer = () => {
-    if (timerIsRunning) {
-      return;
-    }
-    setTimerIsRunning(true);
-    setIntervalId(setInterval(handleStartTime, 1000));
-  };
-
   const pauseTimer = () => {
     setTimerIsRunning(false);
-    setIntervalId(clearInterval(intervalId));
+    clearInterval(intervalId.current);
   };
 
   const resetTimer = () => {
     setTimerIsRunning(false);
-    setIntervalId(clearInterval(intervalId));
-    remainingTime = TWENTY_FIVE_MINUTES;
-    setRemainingTime(TWENTY_FIVE_MINUTES);
+    clearInterval(intervalId.current);
+    timeLeft.current = TWENTY_FIVE_MINUTES;
+    setRemainingTime(timeLeft.current);
     let updatedMinuteValue = Math.floor(
-      remainingTime / ONE_MINUTE_IN_MILLISECONDS
+      timeLeft.current / ONE_MINUTE_IN_MILLISECONDS
     );
     let updatedSecondValue =
-      (remainingTime % ONE_MINUTE_IN_MILLISECONDS) / 1000;
+      (timeLeft.current % ONE_MINUTE_IN_MILLISECONDS) / 1000;
     setMinutesLeft(updatedMinuteValue);
     setSecondsLeft(updatedSecondValue);
   };
