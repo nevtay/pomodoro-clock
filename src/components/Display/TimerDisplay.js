@@ -5,8 +5,11 @@ export default function TimerDisplay() {
   const ONE_SECOND_IN_MILLISECONDS = 1000;
   const ONE_MINUTE_IN_MILLISECONDS = ONE_SECOND_IN_MILLISECONDS * 60;
   const TWENTY_FIVE_MINUTES = ONE_MINUTE_IN_MILLISECONDS * 25;
+  const FIVE_MINUTES = ONE_MINUTE_IN_MILLISECONDS * 5;
   const timeLeft = useRef(null);
   const intervalId = useRef();
+  const [isBreakPhase, setIsBreakPhase] = useState(null);
+  const [isWorkPhase, setIsWorkPhase] = useState(null);
   let [remainingTime, setRemainingTime] = useState(TWENTY_FIVE_MINUTES);
   let [timerIsRunning, setTimerIsRunning] = useState(null);
   let [minutesLeft, setMinutesLeft] = useState(
@@ -16,13 +19,20 @@ export default function TimerDisplay() {
     remainingTime % ONE_MINUTE_IN_MILLISECONDS
   );
 
+  const updateRemainingMinutesAndSeconds = (time) => {
+    const updatedMinuteValue = Math.floor(time / ONE_MINUTE_IN_MILLISECONDS);
+    const updatedSecondValue = (time % ONE_MINUTE_IN_MILLISECONDS) / 1000;
+    setMinutesLeft(updatedMinuteValue);
+    setSecondsLeft(updatedSecondValue);
+  };
+
   const startTimer = () => {
     if (timerIsRunning) {
       return;
     } else {
       setTimerIsRunning(true);
-      timeLeft.current = remainingTime;
       const timerId = setInterval(handleStartTime, 1000);
+      timeLeft.current = remainingTime;
       intervalId.current = timerId;
     }
   };
@@ -30,15 +40,12 @@ export default function TimerDisplay() {
   const handleStartTime = () => {
     if (timeLeft.current <= 0) {
       clearInterval(intervalId.current);
+      timeLeft.current = FIVE_MINUTES;
+      setRemainingTime(FIVE_MINUTES);
+      updateRemainingMinutesAndSeconds(timeLeft.current);
     } else {
       setRemainingTime((timeLeft.current -= 1000));
-      let updatedMinuteValue = Math.floor(
-        timeLeft.current / ONE_MINUTE_IN_MILLISECONDS
-      );
-      let updatedSecondValue =
-        (timeLeft.current % ONE_MINUTE_IN_MILLISECONDS) / 1000;
-      setMinutesLeft(updatedMinuteValue);
-      setSecondsLeft(updatedSecondValue);
+      updateRemainingMinutesAndSeconds(timeLeft.current);
     }
   };
 
@@ -52,13 +59,7 @@ export default function TimerDisplay() {
     clearInterval(intervalId.current);
     timeLeft.current = TWENTY_FIVE_MINUTES;
     setRemainingTime(timeLeft.current);
-    let updatedMinuteValue = Math.floor(
-      timeLeft.current / ONE_MINUTE_IN_MILLISECONDS
-    );
-    let updatedSecondValue =
-      (timeLeft.current % ONE_MINUTE_IN_MILLISECONDS) / 1000;
-    setMinutesLeft(updatedMinuteValue);
-    setSecondsLeft(updatedSecondValue);
+    updateRemainingMinutesAndSeconds(timeLeft.current);
   };
 
   return (
