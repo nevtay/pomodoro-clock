@@ -41,6 +41,7 @@ export default function TimerDisplay() {
     if (timeLeft.current <= 0) {
       clearInterval(intervalId.current);
       timeLeft.current = FIVE_MINUTES;
+      setTimerIsRunning(false);
       setRemainingTime(FIVE_MINUTES);
       updateRemainingMinutesAndSeconds(timeLeft.current);
     } else {
