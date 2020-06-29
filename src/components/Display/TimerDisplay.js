@@ -9,7 +9,7 @@ export default function TimerDisplay() {
   const timeLeft = useRef(null);
   const intervalId = useRef();
   const [isBreakPhase, setIsBreakPhase] = useState(null);
-  const [isWorkPhase, setIsWorkPhase] = useState(null);
+  const [isWorkPhase, setIsWorkPhase] = useState(true);
   let [remainingTime, setRemainingTime] = useState(TWENTY_FIVE_MINUTES);
   let [timerIsRunning, setTimerIsRunning] = useState(null);
   let [minutesLeft, setMinutesLeft] = useState(
@@ -38,11 +38,21 @@ export default function TimerDisplay() {
   };
 
   const handleStartTime = () => {
-    if (timeLeft.current <= 0) {
+    if (isWorkPhase && timeLeft.current <= 0) {
       clearInterval(intervalId.current);
-      timeLeft.current = FIVE_MINUTES;
+      setIsWorkPhase(false);
+      setIsBreakPhase(true);
       setTimerIsRunning(false);
+      timeLeft.current = FIVE_MINUTES;
       setRemainingTime(FIVE_MINUTES);
+      updateRemainingMinutesAndSeconds(timeLeft.current);
+    } else if (isBreakPhase && timeLeft.current <= 0) {
+      clearInterval(intervalId.current);
+      setIsWorkPhase(true);
+      setIsBreakPhase(false);
+      setTimerIsRunning(false);
+      timeLeft.current = TWENTY_FIVE_MINUTES;
+      setRemainingTime(TWENTY_FIVE_MINUTES);
       updateRemainingMinutesAndSeconds(timeLeft.current);
     } else {
       setRemainingTime((timeLeft.current -= 1000));
@@ -56,11 +66,19 @@ export default function TimerDisplay() {
   };
 
   const resetTimer = () => {
-    setTimerIsRunning(false);
-    clearInterval(intervalId.current);
-    timeLeft.current = TWENTY_FIVE_MINUTES;
-    setRemainingTime(timeLeft.current);
-    updateRemainingMinutesAndSeconds(timeLeft.current);
+    if (isWorkPhase) {
+      setTimerIsRunning(false);
+      clearInterval(intervalId.current);
+      timeLeft.current = TWENTY_FIVE_MINUTES;
+      setRemainingTime(timeLeft.current);
+      updateRemainingMinutesAndSeconds(timeLeft.current);
+    } else if (isBreakPhase) {
+      setTimerIsRunning(false);
+      clearInterval(intervalId.current);
+      timeLeft.current = FIVE_MINUTES;
+      setRemainingTime(timeLeft.current);
+      updateRemainingMinutesAndSeconds(timeLeft.current);
+    }
   };
 
   return (
