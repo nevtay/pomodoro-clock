@@ -66,7 +66,6 @@ test.only("After reaching 0:00 from 25:00 (the default work phase duration), the
   const timeLeft = getByLabelText(/timer-display/i);
   act(() => {
     fireEvent.click(startButton);
-    // jest.runAllTimers();
     jest.advanceTimersByTime(TWENTY_FIVE_MINUTES);
     expect(timeLeft.innerHTML).toEqual("0:00");
     jest.advanceTimersByTime(ONE_SECOND_IN_MILLISECONDS);
