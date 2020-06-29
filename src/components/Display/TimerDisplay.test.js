@@ -55,3 +55,21 @@ test("TimerDisplay time should count down one second at a time", () => {
     expect(timeLeft.innerHTML).toEqual("24:57");
   });
 });
+
+test.only("After reaching 0:00 from 25:00 (the default work phase duration), the next interval tick should show the duration of the break phase as 5:00 (5 minutes)", () => {
+  jest.useFakeTimers();
+  const ONE_SECOND_IN_MILLISECONDS = 1000;
+  const ONE_MINUTE_IN_MILLISECONDS = ONE_SECOND_IN_MILLISECONDS * 60;
+  const TWENTY_FIVE_MINUTES = ONE_MINUTE_IN_MILLISECONDS * 25;
+  const { getByText, getByLabelText } = render(<TimerDisplay />);
+  const startButton = getByText(/Start/i);
+  const timeLeft = getByLabelText(/timer-display/i);
+  act(() => {
+    fireEvent.click(startButton);
+    // jest.runAllTimers();
+    jest.advanceTimersByTime(TWENTY_FIVE_MINUTES);
+    expect(timeLeft.innerHTML).toEqual("0:00");
+    jest.advanceTimersByTime(ONE_SECOND_IN_MILLISECONDS);
+    expect(timeLeft.innerHTML).toEqual("5:00");
+  });
+});
