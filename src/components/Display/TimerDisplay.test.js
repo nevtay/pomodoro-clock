@@ -35,7 +35,7 @@ test("TimerDisplay has a reset button", () => {
   expect(resetButton.innerHTML).toEqual("Reset");
 });
 
-test("TimerDisplay time should display 25:00 (25 minutes) by default", async () => {
+test("TimerDisplay time should display 25:00 (25 minutes) by default", () => {
   const { getByText, getByLabelText } = render(<TimerDisplay />);
   const startButton = getByText(/Start/i);
   const timeLeft = getByLabelText(/timer-display/i);
