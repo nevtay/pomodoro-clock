@@ -2,8 +2,6 @@ import React from "react";
 import { render, fireEvent, waitFor, act } from "@testing-library/react";
 import TimerDisplay from "./TimerDisplay";
 
-let cleanupFunc;
-
 test("TimerDisplay shows 25:00 by default", () => {
   const { getByText } = render(<TimerDisplay />);
   const defaultStartTime = getByText(/25:00/i);
@@ -43,15 +41,6 @@ test("TimerDisplay time should display 25:00 (25 minutes) by default", async () 
   const startButton = getByText(/Start/i);
   const timeLeft = getByLabelText(/timer-display/i);
   expect(timeLeft.innerHTML).toEqual("25:00");
-});
-
-test("TimerDisplay start button should trigger setInterval()", () => {
-  jest.useFakeTimers();
-  const { getByText } = render(<TimerDisplay />);
-  const startButton = getByText(/Start/i);
-  fireEvent.click(startButton);
-  expect(setInterval).toHaveBeenCalledTimes(1);
-  expect(setInterval).toHaveBeenLastCalledWith(expect.any(Function), 1000);
 });
 
 test("TimerDisplay time should count down one second at a time", () => {
