@@ -58,7 +58,7 @@ test("TimerDisplay time should count down one second at a time", () => {
   jest.clearAllTimers();
 });
 
-test("After reaching 0:00 from 25:00 (the default work phase duration), the next interval tick should show the duration of the break phase as 5:00 (5 minutes)", () => {
+test("After reaching 0:00 from 25:00 (the default work phase duration), the next interval tick should trigger the break phase and apply the display a duration of 5:00 (5 minutes)", () => {
   const ONE_SECOND_IN_MILLISECONDS = 1000;
   const ONE_MINUTE_IN_MILLISECONDS = ONE_SECOND_IN_MILLISECONDS * 60;
   const TWENTY_FIVE_MINUTES = ONE_MINUTE_IN_MILLISECONDS * 25;
