@@ -4,7 +4,7 @@ export default function Navbar() {
   return (
     <div>
       <nav>
-        <h1>Pomodoro TImer</h1>
+        <h1>Pomodoro Timer</h1>
       </nav>
     </div>
   );
