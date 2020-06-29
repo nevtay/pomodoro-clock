@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import ButtonTemplate from "../Buttons/ButtonTemplate";
 
 export default function TimerDisplay() {
@@ -26,6 +26,14 @@ export default function TimerDisplay() {
     setSecondsLeft(updatedSecondValue);
   };
 
+  useEffect(() => {
+    if (timeLeft.current === null) {
+      return;
+    } else {
+      updateRemainingMinutesAndSeconds(timeLeft.current);
+    }
+  });
+
   const startTimer = () => {
     if (timerIsRunning) {
       return;
@@ -44,19 +52,17 @@ export default function TimerDisplay() {
       setIsBreakPhase(true);
       setTimerIsRunning(false);
       timeLeft.current = FIVE_MINUTES;
-      setRemainingTime(FIVE_MINUTES);
-      updateRemainingMinutesAndSeconds(timeLeft.current);
+      setRemainingTime(timeLeft.current);
     } else if (isBreakPhase && timeLeft.current <= 0) {
       clearInterval(intervalId.current);
       setIsWorkPhase(true);
       setIsBreakPhase(false);
       setTimerIsRunning(false);
       timeLeft.current = TWENTY_FIVE_MINUTES;
-      setRemainingTime(TWENTY_FIVE_MINUTES);
+      setRemainingTime(timeLeft.current);
       updateRemainingMinutesAndSeconds(timeLeft.current);
     } else {
       setRemainingTime((timeLeft.current -= 1000));
-      updateRemainingMinutesAndSeconds(timeLeft.current);
     }
   };
 
@@ -71,13 +77,11 @@ export default function TimerDisplay() {
       clearInterval(intervalId.current);
       timeLeft.current = TWENTY_FIVE_MINUTES;
       setRemainingTime(timeLeft.current);
-      updateRemainingMinutesAndSeconds(timeLeft.current);
     } else if (isBreakPhase) {
       setTimerIsRunning(false);
       clearInterval(intervalId.current);
       timeLeft.current = FIVE_MINUTES;
       setRemainingTime(timeLeft.current);
-      updateRemainingMinutesAndSeconds(timeLeft.current);
     }
   };
 
