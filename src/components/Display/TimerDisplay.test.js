@@ -37,10 +37,8 @@ test("TimerDisplay has a reset button", () => {
 
 test("TimerDisplay start button should trigger setInterval()", () => {
   jest.useFakeTimers();
-  const mock = jest.fn();
   const { getByText } = render(<TimerDisplay />);
   const startButton = getByText(/Start/i);
-  const startTime = getByText(/25:00/i);
   fireEvent.click(startButton);
   expect(setInterval).toHaveBeenCalledTimes(1);
   expect(setInterval).toHaveBeenLastCalledWith(expect.any(Function), 1000);
