@@ -2,6 +2,8 @@ import React from "react";
 import { render, fireEvent, waitFor, act } from "@testing-library/react";
 import TimerDisplay from "./TimerDisplay";
 
+jest.useFakeTimers();
+
 test("TimerDisplay shows 25:00 by default", () => {
   const { getByText } = render(<TimerDisplay />);
   const defaultStartTime = getByText(/25:00/i);
@@ -43,7 +45,6 @@ test("TimerDisplay time should display 25:00 (25 minutes) by default", () => {
 });
 
 test("TimerDisplay time should count down one second at a time", () => {
-  jest.useFakeTimers();
   const { getByText, getByLabelText } = render(<TimerDisplay />);
   const startButton = getByText(/Start/i);
   const timeLeft = getByLabelText(/timer-display/i);
@@ -54,10 +55,10 @@ test("TimerDisplay time should count down one second at a time", () => {
     jest.advanceTimersByTime(2000);
     expect(timeLeft.innerHTML).toEqual("24:57");
   });
+  jest.clearAllTimers();
 });
 
-test.only("After reaching 0:00 from 25:00 (the default work phase duration), the next interval tick should show the duration of the break phase as 5:00 (5 minutes)", () => {
-  jest.useFakeTimers();
+test("After reaching 0:00 from 25:00 (the default work phase duration), the next interval tick should show the duration of the break phase as 5:00 (5 minutes)", () => {
   const ONE_SECOND_IN_MILLISECONDS = 1000;
   const ONE_MINUTE_IN_MILLISECONDS = ONE_SECOND_IN_MILLISECONDS * 60;
   const TWENTY_FIVE_MINUTES = ONE_MINUTE_IN_MILLISECONDS * 25;
@@ -71,4 +72,5 @@ test.only("After reaching 0:00 from 25:00 (the default work phase duration), the
     jest.advanceTimersByTime(ONE_SECOND_IN_MILLISECONDS);
     expect(timeLeft.innerHTML).toEqual("5:00");
   });
+  jest.clearAllTimers();
 });
