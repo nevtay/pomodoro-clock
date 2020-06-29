@@ -43,3 +43,11 @@ test("TimerDisplay start button should trigger setInterval()", () => {
   expect(setInterval).toHaveBeenCalledTimes(1);
   expect(setInterval).toHaveBeenLastCalledWith(expect.any(Function), 1000);
 });
+
+test("TimerDisplay time should display 25:00 (25 minutes) by default", async () => {
+  jest.useFakeTimers();
+  const { getByText, getByLabelText } = render(<TimerDisplay />);
+  const startButton = getByText(/Start/i);
+  const timeLeft = getByLabelText(/timer-display/i);
+  expect(timeLeft.innerHTML).toEqual("25:00");
+});
