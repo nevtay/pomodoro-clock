@@ -57,7 +57,7 @@ test("TimerDisplay time should count down one second at a time", () => {
   jest.clearAllTimers();
 });
 
-test("After completing the work phase (25 minutes) by reaching 0:00, the timer should automatically transition to the break phase and display the appropriate time", () => {
+test("After completing the work phase (25 minutes) by reaching 00:00, the timer should automatically transition to the break phase and display the appropriate time", () => {
   const ONE_SECOND_IN_MILLISECONDS = 1000;
   const ONE_MINUTE_IN_MILLISECONDS = ONE_SECOND_IN_MILLISECONDS * 60;
   const TWENTY_FIVE_MINUTES = ONE_MINUTE_IN_MILLISECONDS * 25;
@@ -67,9 +67,9 @@ test("After completing the work phase (25 minutes) by reaching 0:00, the timer s
   act(() => {
     fireEvent.click(startButton);
     jest.advanceTimersByTime(TWENTY_FIVE_MINUTES);
-    expect(timeLeft.innerHTML).toEqual("0:00");
+    expect(timeLeft.innerHTML).toEqual("00:00");
     jest.advanceTimersByTime(ONE_SECOND_IN_MILLISECONDS);
-    expect(timeLeft.innerHTML).toEqual("5:00");
+    expect(timeLeft.innerHTML).toEqual("05:00");
   });
   jest.clearAllTimers();
 });
