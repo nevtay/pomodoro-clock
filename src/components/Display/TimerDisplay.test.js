@@ -2,7 +2,20 @@ import React from "react";
 import { render, fireEvent, act } from "@testing-library/react";
 import TimerDisplay from "./TimerDisplay";
 
+const ONE_SECOND_IN_MILLISECONDS = 1000;
+const ONE_MINUTE_IN_MILLISECONDS = ONE_SECOND_IN_MILLISECONDS * 60;
+const WORK_PHASE_DURATION = ONE_MINUTE_IN_MILLISECONDS * 25;
+const BREAK_PHASE_DURATION = ONE_MINUTE_IN_MILLISECONDS * 5;
+
 jest.useFakeTimers();
+
+let playStub;
+
+beforeEach(() => {
+  playStub = jest
+    .spyOn(window.HTMLMediaElement.prototype, "play")
+    .mockImplementation(() => {});
+});
 
 test("TimerDisplay shows 25:00 by default", () => {
   const { getByText } = render(<TimerDisplay />);
@@ -58,18 +71,34 @@ test("TimerDisplay time should count down one second at a time", () => {
 });
 
 test("After completing the work phase (25 minutes) by reaching 00:00, the timer should automatically transition to the break phase and display the appropriate time", () => {
-  const ONE_SECOND_IN_MILLISECONDS = 1000;
-  const ONE_MINUTE_IN_MILLISECONDS = ONE_SECOND_IN_MILLISECONDS * 60;
-  const TWENTY_FIVE_MINUTES = ONE_MINUTE_IN_MILLISECONDS * 25;
   const { getByText, getByLabelText } = render(<TimerDisplay />);
   const startButton = getByText(/Start/i);
   const timeLeft = getByLabelText(/timer-display/i);
   act(() => {
     fireEvent.click(startButton);
-    jest.advanceTimersByTime(TWENTY_FIVE_MINUTES);
+    jest.advanceTimersByTime(WORK_PHASE_DURATION);
     expect(timeLeft.innerHTML).toEqual("00:00");
     jest.advanceTimersByTime(ONE_SECOND_IN_MILLISECONDS);
     expect(timeLeft.innerHTML).toEqual("05:00");
+    playStub.mockRestore();
   });
   jest.clearAllTimers();
+});
+
+test("At the end of either the work or break phase, a 'ding' sound should play when the timer reaches 00:00", () => {
+  const { getByText, getByLabelText } = render(<TimerDisplay />);
+  const startButton = getByText(/Start/i);
+  const timeLeft = getByLabelText(/timer-display/i);
+  act(() => {
+    // activate work phase timer
+    expect(timeLeft.innerHTML).toEqual("25:00");
+    fireEvent.click(startButton);
+    jest.runAllTimers();
+    expect(playStub).toHaveBeenCalledTimes(1);
+
+    expect(timeLeft.innerHTML).toEqual("05:00");
+    fireEvent.click(startButton);
+    jest.runAllTimers();
+    expect(playStub).toHaveBeenCalledTimes(2);
+  });
 });
