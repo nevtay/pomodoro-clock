@@ -90,7 +90,6 @@ test("At the end of either the work or break phase, a 'ding' sound should play w
   const startButton = getByText(/Start/i);
   const timeLeft = getByLabelText(/timer-display/i);
   act(() => {
-    // activate work phase timer
     expect(timeLeft.innerHTML).toEqual("25:00");
     fireEvent.click(startButton);
     jest.runAllTimers();
