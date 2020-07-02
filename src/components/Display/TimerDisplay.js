@@ -89,7 +89,7 @@ export default function TimerDisplay() {
     <div>
       <div>
         <h1 aria-label="timer-display">
-          {minutesLeft}:{secondsLeft < 10 ? `0${secondsLeft}` : secondsLeft}
+          {minutesLeft < 10 ? `0${minutesLeft}` : minutesLeft}:{secondsLeft < 10 ? `0${secondsLeft}` : secondsLeft}
         </h1>
       </div>
       <div>
