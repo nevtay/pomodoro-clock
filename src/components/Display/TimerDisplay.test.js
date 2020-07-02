@@ -1,5 +1,5 @@
 import React from "react";
-import { render, fireEvent, waitFor, act } from "@testing-library/react";
+import { render, fireEvent, act } from "@testing-library/react";
 import TimerDisplay from "./TimerDisplay";
 
 jest.useFakeTimers();
@@ -38,8 +38,7 @@ test("TimerDisplay has a reset button", () => {
 });
 
 test("TimerDisplay time should display 25:00 (25 minutes) by default", () => {
-  const { getByText, getByLabelText } = render(<TimerDisplay />);
-  const startButton = getByText(/Start/i);
+  const { getByLabelText } = render(<TimerDisplay />);
   const timeLeft = getByLabelText(/timer-display/i);
   expect(timeLeft.innerHTML).toEqual("25:00");
 });
@@ -58,7 +57,7 @@ test("TimerDisplay time should count down one second at a time", () => {
   jest.clearAllTimers();
 });
 
-test("After reaching 0:00 from 25:00 (the default work phase duration), the next interval tick should trigger the break phase and apply the display a duration of 5:00 (5 minutes)", () => {
+test("After completing the work phase (25 minutes) by reaching 0:00, the timer should automatically transition to the break phase and display the appropriate time", () => {
   const ONE_SECOND_IN_MILLISECONDS = 1000;
   const ONE_MINUTE_IN_MILLISECONDS = ONE_SECOND_IN_MILLISECONDS * 60;
   const TWENTY_FIVE_MINUTES = ONE_MINUTE_IN_MILLISECONDS * 25;
