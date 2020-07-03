@@ -85,7 +85,7 @@ test("After completing the work phase (25 minutes) by reaching 00:00, the timer 
   jest.clearAllTimers();
 });
 
-test("At the end of either the work or break phase, a 'ding' sound should play when the timer reaches 00:00", () => {
+test("Both work and break phase should play a sound when their respective time reaches 00:00", () => {
   const { getByText, getByLabelText } = render(<TimerDisplay />);
   const startButton = getByText(/Start/i);
   const timeLeft = getByLabelText(/timer-display/i);
