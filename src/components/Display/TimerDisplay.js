@@ -62,7 +62,6 @@ export default function TimerDisplay() {
       setTimerIsRunning(false);
       timeLeft.current = TWENTY_FIVE_MINUTES;
       setRemainingTime(timeLeft.current);
-      updateRemainingMinutesAndSeconds(timeLeft.current);
     } else {
       setRemainingTime((timeLeft.current -= 1000));
       if (timeLeft.current < 1 ) {
