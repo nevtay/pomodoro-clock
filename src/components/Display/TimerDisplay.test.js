@@ -88,7 +88,7 @@ describe("timerDisplay", () => {
     expect(timeLeft.innerHTML).toEqual("25:00");
   });
 
-  test("After completing the work phase (25 minutes) by reaching 00:00, the timer should automatically transition to the break phase and display the appropriate time", () => {
+  test("After completing the work phase, the timer should automatically transition to the break phase and display the appropriate time", () => {
     const { getByText, getByLabelText } = render(<TimerDisplay />);
     const startButton = getByText(/Start/i);
     const timeLeft = getByLabelText(/timer-display/i);
@@ -101,7 +101,7 @@ describe("timerDisplay", () => {
     jest.clearAllTimers();
   });
 
-  test("During rest phase, Reset button should reset rest phase to 05:00", () => {
+  test("During rest phase, reset button should reset time to 05:00", () => {
     const { getByText, getByLabelText } = render(<TimerDisplay />);
     const startButton = getByText(/Start/i);
     const resetButton = getByText(/Reset/i);
