@@ -101,7 +101,7 @@ describe("timerDisplay", () => {
     jest.clearAllTimers();
   });
 
-  test("During rest phase, reset button should reset time to 05:00", () => {
+  test("During break phase, reset button should reset time to 05:00", () => {
     const { getByText, getByLabelText } = render(<TimerDisplay />);
     const startButton = getByText(/Start/i);
     const resetButton = getByText(/Reset/i);
