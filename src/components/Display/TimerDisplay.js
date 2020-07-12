@@ -1,13 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
 import ButtonTemplate from "../Buttons/ButtonTemplate";
-import ding from "../../audio/ding.wav"
+import ding from "../../audio/ding.wav";
 
 export default function TimerDisplay() {
   const ONE_SECOND_IN_MILLISECONDS = 1000;
   const ONE_MINUTE_IN_MILLISECONDS = ONE_SECOND_IN_MILLISECONDS * 60;
   const TWENTY_FIVE_MINUTES = ONE_MINUTE_IN_MILLISECONDS * 25;
   const FIVE_MINUTES = ONE_MINUTE_IN_MILLISECONDS * 5;
-  const timeEndedSound = new Audio(ding)
+  const timeEndedSound = new Audio(ding);
   const timeLeft = useRef(null);
   const intervalId = useRef();
   const [isBreakPhase, setIsBreakPhase] = useState(null);
@@ -20,13 +20,6 @@ export default function TimerDisplay() {
   let [secondsLeft, setSecondsLeft] = useState(
     remainingTime % ONE_MINUTE_IN_MILLISECONDS
   );
-
-  const updateRemainingMinutesAndSeconds = (time) => {
-    const updatedMinuteValue = Math.floor(time / ONE_MINUTE_IN_MILLISECONDS);
-    const updatedSecondValue = (time % ONE_MINUTE_IN_MILLISECONDS) / 1000;
-    setMinutesLeft(updatedMinuteValue);
-    setSecondsLeft(updatedSecondValue);
-  };
 
   useEffect(() => {
     if (timeLeft.current === null) {
@@ -64,10 +57,17 @@ export default function TimerDisplay() {
       setRemainingTime(timeLeft.current);
     } else {
       setRemainingTime((timeLeft.current -= 1000));
-      if (timeLeft.current < 1 ) {
+      if (timeLeft.current < 1) {
         timeEndedSound.play();
       }
     }
+  };
+
+  const updateRemainingMinutesAndSeconds = (time) => {
+    const updatedMinuteValue = Math.floor(time / ONE_MINUTE_IN_MILLISECONDS);
+    const updatedSecondValue = (time % ONE_MINUTE_IN_MILLISECONDS) / 1000;
+    setMinutesLeft(updatedMinuteValue);
+    setSecondsLeft(updatedSecondValue);
   };
 
   const pauseTimer = () => {
@@ -76,24 +76,22 @@ export default function TimerDisplay() {
   };
 
   const resetTimer = () => {
+    setTimerIsRunning(false);
+    clearInterval(intervalId.current);
     if (isWorkPhase) {
-      setTimerIsRunning(false);
-      clearInterval(intervalId.current);
       timeLeft.current = TWENTY_FIVE_MINUTES;
-      setRemainingTime(timeLeft.current);
     } else if (isBreakPhase) {
-      setTimerIsRunning(false);
-      clearInterval(intervalId.current);
       timeLeft.current = FIVE_MINUTES;
-      setRemainingTime(timeLeft.current);
     }
+    setRemainingTime(timeLeft.current);
   };
 
   return (
     <div>
       <div>
         <h1 aria-label="timer-display">
-          {minutesLeft < 10 ? `0${minutesLeft}` : minutesLeft}:{secondsLeft < 10 ? `0${secondsLeft}` : secondsLeft}
+          {minutesLeft < 10 ? `0${minutesLeft}` : minutesLeft}:
+          {secondsLeft < 10 ? `0${secondsLeft}` : secondsLeft}
         </h1>
       </div>
       <div>
