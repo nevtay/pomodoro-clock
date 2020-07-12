@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import ButtonTemplate from "../Buttons/ButtonTemplate";
+import "./TimerDisplay.css";
 import ding from "../../audio/ding.wav";
 
 export default function TimerDisplay() {
@@ -87,21 +88,23 @@ export default function TimerDisplay() {
   };
 
   return (
-    <div>
-      <div>
+    <div className="timer">
+      <div className="timer-display-value">
         <h1 aria-label="timer-display">
           {minutesLeft < 10 ? `0${minutesLeft}` : minutesLeft}:
           {secondsLeft < 10 ? `0${secondsLeft}` : secondsLeft}
         </h1>
       </div>
-      <div>
-        <ButtonTemplate text="Start" onClick={startTimer} />
-      </div>
-      <div>
-        <ButtonTemplate text="Pause" onClick={pauseTimer} />
-      </div>
-      <div>
-        <ButtonTemplate text="Reset" onClick={resetTimer} />
+      <div className="timer-buttons">
+        <div className="btn-start">
+          <ButtonTemplate text="Start" onClick={startTimer} />
+        </div>
+        <div className="btn-pause">
+          <ButtonTemplate text="Pause" onClick={pauseTimer} />
+        </div>
+        <div className="btn-reset">
+          <ButtonTemplate text="Reset" onClick={resetTimer} />
+        </div>
       </div>
     </div>
   );
