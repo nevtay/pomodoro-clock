@@ -8,13 +8,17 @@ const WORK_PHASE_DURATION = ONE_MINUTE_IN_MILLISECONDS * 25;
 const BREAK_PHASE_DURATION = ONE_MINUTE_IN_MILLISECONDS * 5;
 
 let playStub;
+jest.useFakeTimers();
 
 describe("timerDisplay", () => {
   beforeEach(() => {
-    jest.useFakeTimers();
     playStub = jest
       .spyOn(window.HTMLMediaElement.prototype, "play")
       .mockImplementation(() => {});
+  });
+
+  afterEach(() => {
+    playStub.mockRestore();
   });
 
   test("TimerDisplay shows 25:00 by default", () => {
@@ -70,11 +74,10 @@ describe("timerDisplay", () => {
     jest.clearAllTimers();
   });
 
-  test.only("Reset button should reset work phase to 25:00", () => {
+  test("During work phase, clicking reset button should reset time to 25:00", () => {
     const { getByText, getByLabelText } = render(<TimerDisplay />);
     const startButton = getByText(/Start/i);
     const resetButton = getByText(/Reset/i);
-    const pauseButton = getByText(/Pause/i);
     const timeLeft = getByLabelText(/timer-display/i);
     act(() => {
       fireEvent.click(startButton);
@@ -83,7 +86,6 @@ describe("timerDisplay", () => {
     });
     fireEvent.click(resetButton);
     expect(timeLeft.innerHTML).toEqual("25:00");
-    jest.clearAllTimers();
   });
 
   test("After completing the work phase (25 minutes) by reaching 00:00, the timer should automatically transition to the break phase and display the appropriate time", () => {
@@ -91,14 +93,31 @@ describe("timerDisplay", () => {
     const startButton = getByText(/Start/i);
     const timeLeft = getByLabelText(/timer-display/i);
     act(() => {
+      expect(timeLeft.innerHTML).toEqual("25:00");
       fireEvent.click(startButton);
-      jest.advanceTimersByTime(WORK_PHASE_DURATION);
-      expect(timeLeft.innerHTML).toEqual("00:00");
-      jest.advanceTimersByTime(ONE_SECOND_IN_MILLISECONDS);
+      jest.runAllTimers();
       expect(timeLeft.innerHTML).toEqual("05:00");
-      playStub.mockRestore();
     });
     jest.clearAllTimers();
+  });
+
+  test("During rest phase, Reset button should reset rest phase to 05:00", () => {
+    const { getByText, getByLabelText } = render(<TimerDisplay />);
+    const startButton = getByText(/Start/i);
+    const resetButton = getByText(/Reset/i);
+    const timeLeft = getByLabelText(/timer-display/i);
+    act(() => {
+      fireEvent.click(startButton);
+      jest.advanceTimersByTime(
+        WORK_PHASE_DURATION + ONE_MINUTE_IN_MILLISECONDS
+      );
+      expect(timeLeft.innerHTML).toEqual("05:00");
+      fireEvent.click(startButton);
+      jest.advanceTimersByTime(ONE_MINUTE_IN_MILLISECONDS);
+      expect(timeLeft.innerHTML).toEqual("04:00");
+    });
+    fireEvent.click(resetButton);
+    expect(timeLeft.innerHTML).toEqual("05:00");
   });
 
   test("Both work and break phase should play a sound when their respective time reaches 00:00", () => {
