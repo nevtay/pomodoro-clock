@@ -16,7 +16,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "test:coverage": "react-scripts test --coverage",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "sass:watch": "sass --watch src/scss/main.scss:src/index.css --no-source-map"
   },
   "eslintConfig": {
     "extends": "react-app"
