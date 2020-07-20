@@ -20,11 +20,3 @@ body {
   align-items: center;
   text-align: center;
 }
-
-h1 {
-  margin: 0;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
-}
