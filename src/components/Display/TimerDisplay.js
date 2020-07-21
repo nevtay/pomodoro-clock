@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
 import ButtonTemplate from "../Buttons/ButtonTemplate";
-import "./TimerDisplay.css";
 import ding from "../../audio/ding.wav";
 
 export default function TimerDisplay() {
