@@ -77,8 +77,7 @@ export default function TimerDisplay() {
   };
 
   const resetTimer = () => {
-    setTimerIsRunning(false);
-    clearInterval(intervalId.current);
+    pauseTimer();
     if (isWorkPhase) {
       timeLeft.current = TWENTY_FIVE_MINUTES;
     } else if (isBreakPhase) {
