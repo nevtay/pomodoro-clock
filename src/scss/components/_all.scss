@@ -1,4 +1,4 @@
-.background-gradient {
+body {
   background: #f8b195;
   background: -moz-linear-gradient(
     180deg,
@@ -24,8 +24,5 @@
     #355c7d 80%,
     #6c5b7b 99%
   );
-}
-
-.background-gradient-filter {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#f8b195",endColorstr="#6c5b7b",GradientType=1);
 }
