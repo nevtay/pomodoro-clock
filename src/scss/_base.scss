@@ -12,32 +12,6 @@ html {
 
 body {
   height: 100%;
-  background: rgb(248, 177, 149);
-  background: -moz-linear-gradient(
-    180deg,
-    rgba(248, 177, 149, 1) 50%,
-    rgba(246, 114, 128, 1) 60%,
-    rgba(192, 108, 132, 1) 70%,
-    rgba(53, 92, 125, 1) 80%,
-    rgba(108, 91, 123, 1) 99%
-  );
-  background: -webkit-linear-gradient(
-    180deg,
-    rgba(248, 177, 149, 1) 50%,
-    rgba(246, 114, 128, 1) 60%,
-    rgba(192, 108, 132, 1) 70%,
-    rgba(53, 92, 125, 1) 80%,
-    rgba(108, 91, 123, 1) 99%
-  );
-  background: linear-gradient(
-    180deg,
-    rgba(248, 177, 149, 1) 50%,
-    rgba(246, 114, 128, 1) 60%,
-    rgba(192, 108, 132, 1) 70%,
-    rgba(53, 92, 125, 1) 80%,
-    rgba(108, 91, 123, 1) 99%
-  );
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#f8b195",endColorstr="#6c5b7b",GradientType=1);
   margin: 0;
   display: relative;
   font-family: "Jost", sans-serif;
