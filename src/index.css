@@ -30,3 +30,14 @@ button {
   margin: 0px 5px;
   cursor: pointer;
 }
+
+.container {
+  width: 100vw;
+}
+
+.timer-buttons {
+  width: 100%;
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+}
