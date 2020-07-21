@@ -58,7 +58,7 @@ export default function TimerDisplay() {
       setRemainingTime(timeLeft.current);
     } else {
       setRemainingTime((timeLeft.current -= 1000));
-      if (timeLeft.current < 1) {
+      if (timeLeft.current < 1000) {
         timeEndedSound.play();
       }
     }
