@@ -93,14 +93,26 @@ export default function TimerDisplay() {
         </h1>
       </div>
       <div className="timer-buttons">
-        <div className="btn btn-start">
-          <ButtonTemplate text="Start" onClick={startTimer} />
+        <div>
+          <ButtonTemplate
+            text="Start"
+            class="btn btn-start"
+            onClick={startTimer}
+          />
         </div>
-        <div className="btn btn-pause">
-          <ButtonTemplate text="Pause" onClick={pauseTimer} />
+        <div>
+          <ButtonTemplate
+            text="Pause"
+            class="btn btn-pause"
+            onClick={pauseTimer}
+          />
         </div>
-        <div className="btn btn-reset">
-          <ButtonTemplate text="Reset" onClick={resetTimer} />
+        <div>
+          <ButtonTemplate
+            text="Reset"
+            class="btn btn-reset"
+            onClick={resetTimer}
+          />
         </div>
       </div>
     </div>
