@@ -78,11 +78,9 @@ export default function TimerDisplay() {
 
   const resetTimer = () => {
     pauseTimer();
-    if (isWorkPhase) {
-      timeLeft.current = TWENTY_FIVE_MINUTES;
-    } else if (isBreakPhase) {
-      timeLeft.current = FIVE_MINUTES;
-    }
+    isWorkPhase
+      ? (timeLeft.current = TWENTY_FIVE_MINUTES)
+      : (timeLeft.current = FIVE_MINUTES);
     setRemainingTime(timeLeft.current);
   };
 
