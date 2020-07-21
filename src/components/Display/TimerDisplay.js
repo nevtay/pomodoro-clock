@@ -13,12 +13,12 @@ export default function TimerDisplay() {
   const intervalId = useRef();
   const [isBreakPhase, setIsBreakPhase] = useState(null);
   const [isWorkPhase, setIsWorkPhase] = useState(true);
-  let [remainingTime, setRemainingTime] = useState(TWENTY_FIVE_MINUTES);
-  let [timerIsRunning, setTimerIsRunning] = useState(null);
-  let [minutesLeft, setMinutesLeft] = useState(
+  const [remainingTime, setRemainingTime] = useState(TWENTY_FIVE_MINUTES);
+  const [timerIsRunning, setTimerIsRunning] = useState(null);
+  const [minutesLeft, setMinutesLeft] = useState(
     Math.floor(remainingTime / ONE_MINUTE_IN_MILLISECONDS)
   );
-  let [secondsLeft, setSecondsLeft] = useState(
+  const [secondsLeft, setSecondsLeft] = useState(
     remainingTime % ONE_MINUTE_IN_MILLISECONDS
   );
 
