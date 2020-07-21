@@ -22,3 +22,11 @@ body {
   align-items: center;
   text-align: center;
 }
+
+button {
+  padding: 13px 26px;
+  border: none;
+  border-radius: 5px;
+  margin: 0px 5px;
+  cursor: pointer;
+}
