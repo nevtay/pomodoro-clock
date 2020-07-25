@@ -86,10 +86,10 @@ export default function TimerDisplay() {
   return (
     <div className="container">
       <div className="timer-display-value">
-        <h1 aria-label="timer-display">
+        <h2 aria-label="timer-display">
           {minutesLeft < 10 ? `0${minutesLeft}` : minutesLeft}:
           {secondsLeft < 10 ? `0${secondsLeft}` : secondsLeft}
-        </h1>
+        </h2>
       </div>
       <div className="timer-buttons">
         <div>
