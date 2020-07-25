@@ -31,6 +31,10 @@ button {
   cursor: pointer;
 }
 
+button:focus {
+  outline: none;
+}
+
 .container {
   width: 100vw;
 }
